@@ -60,14 +60,6 @@ namespace Crud.AdminServices
                     var exams = context.Examinations.Where(x => x.Candidate_Id.Id == result);
                     if (exams != null)
                     {
-                        //Console.WriteLine("Give the ID of the candidate you want to view the certificates");
-                        //int candnumb = Convert.ToInt32(Console.ReadLine());
-                        //var viewcands = appDBContext.Certificates.SqlQuery($"SELECT * FROM Certificates WHERE CandidateNumber = {candnumb}");
-                        //foreach (Certificate cert in viewcands.ToList())
-                        //{
-                        //    Console.WriteLine(cert);
-                        //}
-
                         foreach (var exam in exams)
                         {
                             var examID =exam.Id;
@@ -85,7 +77,6 @@ namespace Crud.AdminServices
                                     //var some = context.Examinations.Join(context.Certificates, p => p.Certificate_Id.Id, j => j.Id, 
                                     //    (p, j) => new { Certificate_Title = j.Name , cerId = j.Id }).ToList();
                                     Console.WriteLine($"{prop.Name} = {some1.Name}");
-
                                 }
                                 else
                                 {

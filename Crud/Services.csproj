@@ -6,7 +6,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{FFBFA361-53F5-42BE-9346-5ACF265850D6}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <OutputType>Exe</OutputType>
     <RootNamespace>Crud</RootNamespace>
     <AssemblyName>Crud</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
@@ -39,15 +39,33 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BouncyCastle.Crypto, Version=1.8.9.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
+      <HintPath>..\Assignment3A\packages\BouncyCastle.1.8.9\lib\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\Assignment3A\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\Assignment3A\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="IronPdf, Version=2022.11.0.10347, Culture=neutral, PublicKeyToken=94e1c31412563c75, processorArchitecture=MSIL">
+      <HintPath>..\Assignment3A\packages\IronPdf.Slim.2022.11.10347\lib\net40\IronPdf.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp, Version=5.5.13.3, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\Assignment3A\packages\iTextSharp.5.5.13.3\lib\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="PdfSharp, Version=1.50.5147.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\Assignment3A\packages\PDFsharp.1.50.5147\lib\net20\PdfSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="PdfSharp.Charting, Version=1.50.5147.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\Assignment3A\packages\PDFsharp.1.50.5147\lib\net20\PdfSharp.Charting.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -62,6 +80,7 @@
     <Compile Include="AdminServices\Read.cs" />
     <Compile Include="AdminServices\Update.cs" />
     <Compile Include="CandidateServices\ListCertificates.cs" />
+    <Compile Include="CandidateServices\PDFGenerator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -83,6 +102,8 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\Assignment3A\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\Assignment3A\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
     <Error Condition="!Exists('..\Assignment3A\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\Assignment3A\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+    <Error Condition="!Exists('..\Assignment3A\packages\IronPdf.Native.Chrome.Windows.2022.11.10299\build\IronPdf.Native.Chrome.Windows.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\Assignment3A\packages\IronPdf.Native.Chrome.Windows.2022.11.10299\build\IronPdf.Native.Chrome.Windows.targets'))" />
   </Target>
   <Import Project="..\Assignment3A\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\Assignment3A\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
+  <Import Project="..\Assignment3A\packages\IronPdf.Native.Chrome.Windows.2022.11.10299\build\IronPdf.Native.Chrome.Windows.targets" Condition="Exists('..\Assignment3A\packages\IronPdf.Native.Chrome.Windows.2022.11.10299\build\IronPdf.Native.Chrome.Windows.targets')" />
 </Project>

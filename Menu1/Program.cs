@@ -33,7 +33,7 @@ namespace Menu1
 
             var candidateSubmenu = new ConsoleMenu(args, level: 1)
                 .Add("List of Certificates", () => ListCertificates.CertificateRead())
-                .Add("Export Certifaicates to a PDF", () => CandidateResults())
+                .Add("Export Certifaicates to a PDF", () => Environment.Exit(0))
                 .Add("Go to the previous screen", ConsoleMenu.Close);
 
             var menu = new ConsoleMenu(args, level: 0)
@@ -43,26 +43,9 @@ namespace Menu1
                 {
                     config.Title = "Main Menu";
                 });
-            
             menu.Show();
 
         }
-
-        private static void CrudAction()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static void CandidateResults()
-        {
-            throw new NotImplementedException();
-        }
-
-        public static void CreateCandidate()
-    {
-            Console.WriteLine("candidate");
-            Console.ReadKey();
-    }
     }
 
 }

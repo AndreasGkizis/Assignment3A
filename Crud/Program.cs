@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Crud.AdminServices;
+using Crud.CandidateServices;
 
 namespace Crud
 {
@@ -15,6 +16,7 @@ namespace Crud
             //Read.CandidateRead();
             //Update.UpdateCandidate();
             //Delete.DeleteCandidate();
+            PDFGenerator.createPdfFromId();
             Console.WriteLine("out of function");
             Console.ReadKey();
         }
