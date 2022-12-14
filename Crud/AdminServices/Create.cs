@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Assignment3A.Models;
 using Assignment3A.Service.Data;
 
-namespace Crud.AdminServices
+namespace Services.AdminServices
 {
     public class Create
     {

@@ -9,7 +9,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Crud.AdminServices
+namespace Services.AdminServices
 {
     public class Read
     {

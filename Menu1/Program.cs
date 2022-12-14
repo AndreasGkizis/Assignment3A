@@ -5,8 +5,9 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using ConsoleTools;
-using Crud.AdminServices;
-using Crud.CandidateServices;
+using Services.AdminServices;
+using Services.CandidateServices;
+//using Crud.CandidateServices;
 
 namespace Menu1
 {
@@ -33,7 +34,7 @@ namespace Menu1
 
             var candidateSubmenu = new ConsoleMenu(args, level: 1)
                 .Add("List of Certificates", () => ListCertificates.CertificateRead())
-                .Add("Export Certifaicates to a PDF", () => Environment.Exit(0))
+                .Add("Export Certifaicates to a PDF", () => MyExportPdf.createPdfFromId())
                 .Add("Go to the previous screen", ConsoleMenu.Close);
 
             var menu = new ConsoleMenu(args, level: 0)

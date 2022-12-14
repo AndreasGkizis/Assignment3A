@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Crud.AdminServices;
-using Crud.CandidateServices;
+using Services.AdminServices;
+using Services.CandidateServices;
 
 namespace Crud
 {
@@ -16,7 +16,7 @@ namespace Crud
             //Read.CandidateRead();
             //Update.UpdateCandidate();
             //Delete.DeleteCandidate();
-            PDFGenerator.createPdfFromId();
+            //MyExportPdf.createPdfFromId();
             Console.WriteLine("out of function");
             Console.ReadKey();
         }

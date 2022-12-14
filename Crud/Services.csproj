@@ -80,7 +80,7 @@
     <Compile Include="AdminServices\Read.cs" />
     <Compile Include="AdminServices\Update.cs" />
     <Compile Include="CandidateServices\ListCertificates.cs" />
-    <Compile Include="CandidateServices\PDFGenerator.cs" />
+    <Compile Include="CandidateServices\MyExportPdf.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

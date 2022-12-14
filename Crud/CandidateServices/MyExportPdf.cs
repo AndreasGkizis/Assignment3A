@@ -1,28 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Drawing.Printing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using IronPdf;
-using System.Drawing;
-using System.Drawing.Printing;
-using IronPdf.Forms;
-using IronPdf.Pages;
-
-
-using iTextSharp;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using System.IO;
 using System.Diagnostics;
 using Assignment3A.Service.Data;
 using Assignment3A.Models;
-using Crud.AdminServices;
 
-namespace Crud.CandidateServices
+namespace Services.CandidateServices
 {
-    internal class PDFGenerator
+    public class MyExportPdf
     {
         public static void createPdfFromId()
         {
