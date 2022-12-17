@@ -18,10 +18,11 @@ namespace Menu1
             //Action exitAction = () => { Environment.Exit(0); };
 
             var crudSubmenu = new ConsoleMenu(args, level: 2)
+                .Add("Show All Candidates", () => Read.CandidateReadAll())
+                .Add("Show Full details of a Candidate", () => Read.CandidateRead())
                 .Add("Create a new Candidate", () => Create.CreateCandidate())
                 .Add("Update a Candidate's Details", () => Update.UpdateCandidate())
                 .Add("Delete a Candidate", () => Delete.DeleteCandidate())
-                .Add("Results of a Candidate", () => Read.CandidateRead())
                 .Add("Go to the previous screen", ConsoleMenu.Close);
 
             var candidateResultsSubMenu = new ConsoleMenu(args, level: 2)

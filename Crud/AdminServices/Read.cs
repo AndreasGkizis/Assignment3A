@@ -13,12 +13,48 @@ namespace Services.AdminServices
 {
     public class Read
     {
+        public static void CandidateReadAll()
+        {
+            AppContextDikoMou context = new AppContextDikoMou();
+            var AllCandidates = context.Candidates.ToList();
+            while (true)
+            {
+                foreach (var candidate in AllCandidates)
+                {
+                    var props = candidate.GetType().GetProperties();
+                    foreach (var property in props)
+                    {
+
+                        if (property.Name == "Id" ||
+                                property.Name == "FirstName" ||
+                                property.Name == "middleName" ||
+                                property.Name == "LastName" ||
+                                property.Name == "CandidateNumber")
+                        {
+                            Console.WriteLine($"{property.Name} = {property.GetValue(candidate)}");
+                        }
+                        else
+                        {
+
+                        }
+                    }
+                Console.WriteLine("\n----------------------------------------------\n");
+                }
+                break;
+            }
+            Console.WriteLine("\n----------------------------------------------");
+            Console.WriteLine($"Reading Finished. Total number of Candidates = {AllCandidates.Count()}");
+            Console.WriteLine($"Press any button to continue .. !");
+            Console.WriteLine("----------------------------------------------");
+
+            Console.ReadKey();
+        }
         public static void CandidateRead()
         {
             AppContextDikoMou context = new AppContextDikoMou();
             while (true)
             {
-                Console.WriteLine($"Enter an Id for a Candidate");
+                Console.WriteLine($"Enter an Id for a Candidate below ");
                 var input = Console.ReadLine();
                 if (int.TryParse(input, out int result))
                 {
@@ -62,7 +98,7 @@ namespace Services.AdminServices
                     {
                         foreach (var exam in exams)
                         {
-                            var examID =exam.Id;
+                            var examID = exam.Id;
                             var props = exam.GetType().GetProperties();
                             foreach (var prop in props)
                             {
@@ -84,7 +120,7 @@ namespace Services.AdminServices
 
                                 }
                             }
-                        Console.WriteLine("----------------------------------------------");
+                            Console.WriteLine("----------------------------------------------");
                         }
                         break;
 

@@ -20,7 +20,7 @@ namespace Services.CandidateServices
                 var input = Console.ReadLine();
                 if (int.TryParse(input, out int result))
                 {
-                    var exams = context.Examinations.Where(x => x.Candidate_Id.Id == result);
+                    var exams = context.Examinations.Where(x => x.Candidate_Id.Id == result && x.Passed == true);
                     var name = context.Candidates.Where(x => x.Id == result).FirstOrDefault();
                     if (exams != null)
                     {
@@ -53,19 +53,14 @@ namespace Services.CandidateServices
                                 else if (prop.PropertyType == typeof(Certificate))
                                 {
                                     var some1 = context.Certificates.Where(x => x.Id == examID).FirstOrDefault();
-                                    //var some = context.Examinations.Join(context.Certificates, p => p.Certificate_Id.Id, j => j.Id, 
-                                    //    (p, j) => new { Certificate_Title = j.Name , cerId = j.Id }).ToList();
                                     Console.WriteLine($"{prop.Name} = {some1.Name}");
                                     document.Add(new Paragraph($" FOR GETTING THE CERTIFICATE"));
                                     document.Add(new Paragraph($"{some1.Name}"));
-
                                 }
                                 else
                                 {
-                                    document.Add(new Paragraph($"{prop.Name}  ---===>    {prop.GetValue(exam)}"));
-
+                                    document.Add(new Paragraph($"{prop.Name}  |------->    {prop.GetValue(exam)}"));
                                     Console.WriteLine($"{prop.Name} = {prop.GetValue(exam)}");
-
                                 }
                             }
                             Console.WriteLine("----------------------------------------------");
