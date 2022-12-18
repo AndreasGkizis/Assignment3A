@@ -26,7 +26,7 @@ namespace Services.CandidateServices
                     {
                         foreach (var exam in exams)
                         {
-                            var path = "..\\..\\..\\newPdfFile.pdf"; // goes to folder Assignment3A/newPdfFile.pdf
+                            var path = @"..\..\..\PdfFiles\newPdfFile.pdf"; // goes to folder Assignment3A/PdfFiles\newPdfFile.pdf
                             System.IO.FileStream fs = new FileStream(path, FileMode.OpenOrCreate);
 
                             Document document = new Document(PageSize.A4, 25, 25, 30, 30);
@@ -69,7 +69,8 @@ namespace Services.CandidateServices
                             fs.Close();
 
                             Process.Start(path);
-                            Console.WriteLine("your certificate has been generated, please save it somewhere and proceed for the next one if available ");
+                            Console.WriteLine("your certificate has been generated and is the PdfFeiles folder in the base folder, please save it somewhere and proceed for the next one if available ");
+                            Console.WriteLine("Press any key when you are ready to proceed");
                             Console.ReadKey();
                         }
 
