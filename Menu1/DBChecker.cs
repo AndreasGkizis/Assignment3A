@@ -17,7 +17,6 @@ namespace Menu1
                 Console.WriteLine("Database not found on your local machine. Let me create one for you real quick");
                 Console.WriteLine("I will even throw in some data so you can play around, I am a generous God ...");
                 db.Database.Initialize(true);
-                //db.Database.migra
                 Console.WriteLine(".....Done! Press any key to continue.. =] and have fun! ");
                 Console.ReadKey();
             }

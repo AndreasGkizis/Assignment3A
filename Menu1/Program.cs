@@ -18,6 +18,7 @@ namespace Menu1
     {
         static void Main(string[] args)
         {
+         
             DBChecker.InitialiseIfnotExists();
             Menu.ConsoleMenu1(args);
         }
