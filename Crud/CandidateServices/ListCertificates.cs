@@ -1,10 +1,9 @@
 ﻿using Assignment3A.Models;
 using Assignment3A.Service.Data;
 using System;
-using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Services.CandidateServices
 {
@@ -19,50 +18,37 @@ namespace Services.CandidateServices
                 var input = Console.ReadLine();
                 if (int.TryParse(input, out int result))
                 {
-                    var exams = context.Examinations.Where(x => x.Candidate_Id.Id == result && x.Passed== true);
-                    if (exams != null)
+                    var exams = context.Examinations.Where(x => x.Candidate_Id.Id == result && x.Passed == true).Include(x => x.Certificate_Id);
+                    if (exams.Count() != 0)
                     {
-                        //Console.WriteLine("Give the ID of the candidate you want to view the certificates");
-                        //int candnumb = Convert.ToInt32(Console.ReadLine());
-                        //var viewcands = appDBContext.Certificates.SqlQuery($"SELECT * FROM Certificates WHERE CandidateNumber = {candnumb}");
-                        //foreach (Certificate cert in viewcands.ToList())
-                        //{
-                        //    Console.WriteLine(cert);
-                        //}
-
                         foreach (var exam in exams)
                         {
                             var examID = exam.Id;
+                            var certID = exam.Certificate_Id.Id;
                             var props = exam.GetType().GetProperties();
                             foreach (var prop in props)
                             {
                                 if (prop.PropertyType == typeof(Candidate))
                                 {
-                                    //var kati = prop.GetValue(exam);
-                                    //int.TryParse(kati.ToString(), out examID);
                                 }
                                 else if (prop.PropertyType == typeof(Certificate))
                                 {
-                                    var some1 = context.Certificates.Where(x => x.Id == examID).FirstOrDefault();
-                                    //var some = context.Examinations.Join(context.Certificates, p => p.Certificate_Id.Id, j => j.Id, 
-                                    //    (p, j) => new { Certificate_Title = j.Name , cerId = j.Id }).ToList();
+                                    var some1 = context.Certificates.Where(x => x.Id == certID).FirstOrDefault();
                                     Console.WriteLine($"{prop.Name} = {some1.Name}");
-
                                 }
                                 else
                                 {
                                     Console.WriteLine($"{prop.Name} = {prop.GetValue(exam)}");
-
                                 }
                             }
                             Console.WriteLine("----------------------------------------------");
                         }
                         break;
-
                     }
                     else
                     {
-                        Console.WriteLine("please try again and enter Number");
+                        Console.WriteLine($"Candidate with Id = {result} does not have any exams");
+                        break;
                     }
                 }
                 else

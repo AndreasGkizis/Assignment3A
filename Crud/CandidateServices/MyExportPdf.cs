@@ -6,6 +6,7 @@ using System.IO;
 using System.Diagnostics;
 using Assignment3A.Service.Data;
 using Assignment3A.Models;
+using System.Data.Entity;
 
 namespace Services.CandidateServices
 {
@@ -20,9 +21,9 @@ namespace Services.CandidateServices
                 var input = Console.ReadLine();
                 if (int.TryParse(input, out int result))
                 {
-                    var exams = context.Examinations.Where(x => x.Candidate_Id.Id == result && x.Passed == true);
+                    var exams = context.Examinations.Where(x => x.Candidate_Id.Id == result && x.Passed == true).Include(x => x.Certificate_Id);
                     var name = context.Candidates.Where(x => x.Id == result).FirstOrDefault();
-                    if (exams != null)
+                    if (exams.Count() != 0)
                     {
                         foreach (var exam in exams)
                         {
@@ -43,7 +44,7 @@ namespace Services.CandidateServices
                             document.Add(new Paragraph($"CONGRATULATIONS {name.FirstName}, {name.LastName}"));
 
                             //document.Add(new Paragraph(st.ToString()));
-                            var examID = exam.Id;
+                            var CertID = exam.Certificate_Id.Id;
                             var props = exam.GetType().GetProperties();
                             foreach (var prop in props)
                             {
@@ -52,10 +53,13 @@ namespace Services.CandidateServices
                                 }
                                 else if (prop.PropertyType == typeof(Certificate))
                                 {
-                                    var some1 = context.Certificates.Where(x => x.Id == examID).FirstOrDefault();
-                                    Console.WriteLine($"{prop.Name} = {some1.Name}");
+                                    var some1 = context.Certificates.Where(x => x.Id == CertID).FirstOrDefault();
+                                    Console.WriteLine($"Certificate Title = {some1.Name}");
                                     document.Add(new Paragraph($" FOR GETTING THE CERTIFICATE"));
                                     document.Add(new Paragraph($"{some1.Name}"));
+                                }
+                                else if (prop.Name == "Id")
+                                {
                                 }
                                 else
                                 {
@@ -80,7 +84,7 @@ namespace Services.CandidateServices
                     else
                     {
                         Console.WriteLine("No Certificates for this Candidate \nplease try again and enter a Number");
-                    }
+                    }break;
                 }
                 else
                 {

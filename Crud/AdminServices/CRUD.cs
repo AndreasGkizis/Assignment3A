@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Assignment3A.Models;
 using Assignment3A.Service.Data;
 
@@ -77,6 +76,7 @@ namespace Services.AdminServices
                     }
                 }
             }
+            context.Candidates.Add(newCand);
             context.SaveChanges();
             return newCand;
         }
@@ -129,6 +129,7 @@ namespace Services.AdminServices
                 var input = Console.ReadLine();
                 if (int.TryParse(input, out int result))
                 {
+                    Console.Clear();
                     var candidate = context.Candidates.Find(result);
                     if (candidate != null)
                     {
@@ -141,7 +142,7 @@ namespace Services.AdminServices
                     }
                     else
                     {
-                        Console.WriteLine("please try again and enter Number");
+                        Console.WriteLine($"Candidate with Id = {result} not found");
                     }
                 }
                 else
@@ -164,13 +165,14 @@ namespace Services.AdminServices
                 var input = Console.ReadLine();
                 if (int.TryParse(input, out int result))
                 {
-                    var exams = context.Examinations.Where(x => x.Candidate_Id.Id == result);
+                    var exams = context.Examinations.Where(x => x.Candidate_Id.Id == result).Include(x => x.Candidate_Id).Include(y => y.Certificate_Id);
                     if (exams != null)
                     {
                         foreach (var exam in exams)
                         {
                             var examID = exam.Id;
                             var props = exam.GetType().GetProperties();
+                            var certID = exam.Certificate_Id.Id;
                             foreach (var prop in props)
                             {
                                 if (prop.PropertyType == typeof(Candidate))
@@ -180,10 +182,10 @@ namespace Services.AdminServices
                                 }
                                 else if (prop.PropertyType == typeof(Certificate))
                                 {
-                                    var some1 = context.Certificates.Where(x => x.Id == examID).FirstOrDefault();
+                                    var some1 = context.Certificates.Where(x => x.Id == certID).FirstOrDefault();
                                     //var some = context.Examinations.Join(context.Certificates, p => p.Certificate_Id.Id, j => j.Id, 
                                     //    (p, j) => new { Certificate_Title = j.Name , cerId = j.Id }).ToList();
-                                    Console.WriteLine($"{prop.Name} = {some1.Name}");
+                                    Console.WriteLine($"Certificate Title = {some1.Name}");
                                 }
                                 else
                                 {
@@ -235,13 +237,14 @@ namespace Services.AdminServices
                             else if (prop.Name == "PhotoIdType")
                             {
                                 Console.WriteLine($"{prop.Name} = {prop.GetValue(candidate)}");
-                                while (true)
+                                bool run = true;
+                                while (run)
                                 {
                                     Console.WriteLine("Enter 1 for NATIONAL_ID or 2 for PASSPORT or press enter to keep it");
                                     var input = Console.ReadLine();
                                     if (input == "")
                                     {
-                                        break;
+                                        run = false;
                                     }
                                     else
                                     {
@@ -261,44 +264,69 @@ namespace Services.AdminServices
                             else if (prop.PropertyType == typeof(int))
                             {
                                 Console.WriteLine($"{prop.Name} = {prop.GetValue(candidate)}");
-                                while (true)
+                                bool run = true;
+                                while (run)
                                 {
                                     Console.WriteLine($"Enter a number you wish to insert into field {prop.Name}");
                                     var input = Console.ReadLine();
-                                    if (int.TryParse(input, out int resultInt))
+                                    if (input == "")
                                     {
-                                        prop.SetValue(candidate, resultInt);
-                                        break;
+                                        run = false;
                                     }
                                     else
                                     {
-                                        Console.WriteLine("please try again and enter Number");
+                                        if (int.TryParse(input, out int resultInt))
+                                        {
+                                            prop.SetValue(candidate, resultInt);
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            Console.WriteLine("please try again and enter Number");
+                                        }
                                     }
                                 }
                             }
                             else if (prop.PropertyType == typeof(string))
                             {
                                 Console.WriteLine($"Please enter a value for {prop.Name}");
-                                prop.SetValue(candidate, Console.ReadLine());
+                                var input = Console.ReadLine();
+                                if (input == "")
+                                {
+                                }
+                                else
+                                {
+                                    prop.SetValue(candidate, input);
+                                }
+
                             }
                             else
                             {
-                                while (true)
+                                bool run = true;
+                                while (run)
                                 {
                                     Console.WriteLine($"enter date in YYYY-MM-DD format for {prop.Name}");
                                     var input = Console.ReadLine();
-                                    if (DateTime.TryParse(input, out var date))
+                                    if (input == "")
                                     {
-                                        prop.SetValue(candidate, date);
-                                        break;
+                                        run = false;
                                     }
                                     else
                                     {
-                                        Console.WriteLine("please try again and enter date in YYYY-MM-DD format");
+                                        if (DateTime.TryParse(input, out var date))
+                                        {
+                                            prop.SetValue(candidate, date);
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            Console.WriteLine("please try again and enter date in YYYY-MM-DD format");
+                                        }
                                     }
                                 }
                             }
                         }
+                        context.Candidates.AddOrUpdate(candidate);
                         context.SaveChanges();
                         break;
                     }
@@ -337,14 +365,18 @@ namespace Services.AdminServices
                         }
                         else
                         {
-                            Console.WriteLine("(You can always double check the ID in the Admin Console =] )");
                             Console.WriteLine("You are being redirected to the previous menu !");
                             Console.WriteLine("Press any key to continue .. !");
                             Console.ReadKey();
                             break;
                         }
                     }
-                    break;
+                    else
+                    {
+                        Console.WriteLine($"Candidate with id = {result} was not found ");
+                        Console.WriteLine("Please try again and enter a number or a valid ID");
+
+                    }
                 }
                 else
                 {
